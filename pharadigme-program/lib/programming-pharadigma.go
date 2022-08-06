@@ -1,11 +1,7 @@
 package lib
 
-import (
-	"errors"
-)
-
 type ProgrammingPharadigme interface {
-	GetShipByID(id int64) (*Ship, error)
+	GetShipByID(id int64) *Ship
 }
 
 //Ship struct
@@ -14,17 +10,7 @@ type Ship struct {
 	Type   string `json:"type"`
 }
 
-//Get of ShipID
-func (p *Ship) GetShipID() int64 {
-	return p.ShipID
-}
-
-//Get of Type
-func (p *Ship) GetType() string {
-	return p.Type
-}
-
-func GetShipByID(id int64) (*Ship, error) {
+func (p *Ship) GetShipByID(id int64) *Ship {
 	dataShip := []*Ship{
 		{ShipID: 212, Type: "Perahu Motor"},
 		{ShipID: 321, Type: "Perahu Layar"},
@@ -33,9 +19,9 @@ func GetShipByID(id int64) (*Ship, error) {
 
 	for _, i := range dataShip {
 		if id == i.ShipID {
-			return i, nil
+			return i
 		}
 	}
 
-	return nil, errors.New("ID SHIP NOT FOUND")
+	return nil
 }
