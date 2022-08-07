@@ -1,0 +1,14 @@
+{
+ "product": [
+  {
+   "product_code": "KPAPI21",
+   "product_name": "Kapal API Hitam 21",
+   "qty": 22
+  },
+  {
+   "product_code": "My Roti Selai Kacang",
+   "product_name": "MYRSK",
+   "qty": 3
+  }
+ ]
+}
