@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .alert {
+          padding: 20px;
+          background-color: #f44336;
+          color: white;
+        }
+        
+        .closebtn {
+          margin-left: 15px;
+          color: white;
+          font-weight: bold;
+          float: right;
+          font-size: 22px;
+          line-height: 20px;
+          cursor: pointer;
+          transition: 0.3s;
+        }
+        
+        .closebtn:hover {
+          color: black;
+        }
+        </style>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
+    <title>Daily Weight</title>
+</head>
+<body>
+    <div class="container">
+    <div class="row ">
+        <div class="col-lg-12">
+        
+    <h1>Daily Weight</h1>
+      {{if .Error}}
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>Danger!</strong> {{.Error}}
+      </div>
+      {{end}}
+    <button type="button" class="btn btn-info" style="float: right;" data-toggle="modal" data-target="#createModal">
+        Add
+    </button>
+
+    <table>
+        <tr>
+          <th>Date {{.Error}}</th>
+          <th>Max</th>
+          <th>Min</th>
+          <th>Range</th>
+          <th>Action</th>
+        </tr>
+        {{range .Data}}
+            <tr>
+                <td>
+                    {{.Date}} 
+                </td>
+                <td>
+                    {{.Max}}
+                 </td>
+                 <td>
+                    {{.Min}}
+                 </td>
+                 <td>
+                    {{.Range}}
+                 </td>
+                 <td>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#updateModal{{.Date}}">
+                        Edit
+                      </button> | <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{.Date}}">
+                        Show
+                      </button> | <a href="/?dateKey={{.Date}}" class="btn btn-danger">Delete</a> 
+
+                <!-- Modal Show -->
+                <div class="modal fade" id="exampleModal{{.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Daily Detail</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table>
+                                <tr>
+                                  <th>Tanggal</th>
+                                  <th>{{.Date}}</th>
+                                </tr>
+                                <tr>
+                                    <td>Max</td>
+                                    <td>{{.Max}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Min</td>
+                                    <td>{{.Min}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Range</td>
+                                    <td>{{.Range}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Modal Update -->
+    <div class="modal fade" id="updateModal{{.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Update Weight Daily</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" value="edit" name="option-action" style="display:none">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date</label>
+                            <input type="text" class="form-control" value="{{.Date}}"  aria-describedby="dateHelp" name="date-weight-update" readonly>
+                            <small id="dateHelp" class="form-text text-muted">date is uniq, can't input duplicate data same date</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Max</label>
+                            <input type="number" class="form-control" value="{{.Max}}"  aria-describedby="maxHelp" name="max-weight-update">
+                            <small id="maxHelp" class="form-text text-muted">input max weight</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Min</label>
+                            <input type="number" class="form-control" value="{{.Min}}"  aria-describedby="minHelp" name="min-weight-update">
+                            <small id="minHelp" class="form-text text-muted">input min weight</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+                 </td>  
+            </tr>
+        {{end}}
+    </table>
+
+    <!-- Modal Create -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="" method="POST">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Weight Daily</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" value="create" name="option-action" style="display:none">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Date</label>
+                            <input type="date" class="form-control"  aria-describedby="dateHelp" name="date-weight">
+                            <small id="dateHelp" class="form-text text-muted">date is uniq, can't input duplicate data same date</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Max</label>
+                            <input type="number" class="form-control"  aria-describedby="maxHelp" name="max-weight">
+                            <small id="maxHelp" class="form-text text-muted">input max weight</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Min</label>
+                            <input type="number" class="form-control"  aria-describedby="minHelp" name="min-weight">
+                            <small id="minHelp" class="form-text text-muted">input min weight</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</html>
