@@ -24,7 +24,7 @@ func pharadigmeProgram() {
 func createFileTemp() {
 	// Shopping chart
 	// create file to temp database
-	_, err := os.Create("test.txt")
+	_, err := os.Create("shopping-db.txt")
 	if err != nil {
 		log.Fatalf("failed creating file: %s", err)
 	}
@@ -44,14 +44,12 @@ func viewAllproduct() {
 }
 
 func addProduct(product *sc.Product) {
-	// get file
 	var sc sc.ProductInterface = &sc.ListProduct{}
 
 	sc.AddProduct(product)
 }
 
 func deleteProduct(code string) {
-	// get file
 	var sc sc.ProductInterface = &sc.ListProduct{}
 
 	sc.DeleteProduct(code)

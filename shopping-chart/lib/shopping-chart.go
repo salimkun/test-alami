@@ -31,7 +31,7 @@ func (p *ListProduct) AddProduct(pds *Product) {
 			// write file
 			p.Products = dt
 			file, _ := json.MarshalIndent(p, "", " ")
-			_ = ioutil.WriteFile("test.txt", file, 0644)
+			_ = ioutil.WriteFile("shopping-db.txt", file, 0644)
 			return
 		}
 	}
@@ -39,7 +39,7 @@ func (p *ListProduct) AddProduct(pds *Product) {
 	p.Products = dt
 	// write file
 	file, _ := json.MarshalIndent(p, "", " ")
-	_ = ioutil.WriteFile("test.txt", file, 0644)
+	_ = ioutil.WriteFile("shopping-db.txt", file, 0644)
 }
 
 func (p *ListProduct) DeleteProduct(code string) {
@@ -54,12 +54,12 @@ func (p *ListProduct) DeleteProduct(code string) {
 
 	// write file
 	file, _ := json.MarshalIndent(dataProductNew, "", " ")
-	_ = ioutil.WriteFile("test.txt", file, 0644)
+	_ = ioutil.WriteFile("shopping-db.txt", file, 0644)
 }
 
 func (p *ListProduct) ViewAllProduct() []*Product {
 	// get all data
-	data, err := ioutil.ReadFile("test.txt")
+	data, err := ioutil.ReadFile("shopping-db.txt")
 	if err != nil {
 		log.Panicf("failed reading data from file: %s", err)
 	}

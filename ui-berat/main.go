@@ -46,7 +46,6 @@ func main() {
 				dateWeight := r.FormValue("date-weight-update")
 				maxWeight := r.FormValue("max-weight-update")
 				minWeight := r.FormValue("min-weight-update")
-				fmt.Println("ALALLALASKS ", dateWeight, "asns ", maxWeight)
 
 				max, _ := strconv.Atoi(maxWeight)
 				min, _ := strconv.Atoi(minWeight)
