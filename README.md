@@ -1,14 +1,11 @@
-# sirclo-test
-for test sirclo
+# alami-test
+for test alami
 
-- For querstion no 1 and 2 (pharadigma programming and shopping chart) just run : 
+- Just Run : 
 ```sh
- go run test-sirclo.go 
-```
-- For question no 3 (UI and data weight) just run : 
-```sh
-cd ui-berat
+go get
+go mod tidy
 go run main.go
 ```
 
-> Note: in this program not use sql database but use file.txt for save data by json.
+> Note: after run file After-Eod.csv always reset.
